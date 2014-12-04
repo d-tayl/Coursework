@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>How far?</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+		
+      }
+
+	  	@media only screen and (max-width: 600px) {
+			
+			#map-canvas {
+				height: 60%;
+			}
+		}
+	  
+	  article{
+		max-width:1080px;
+		width:100%;
+		margin-left:auto;
+		margin-right:auto;
+		font-size :1.3em;
+		height:60%;
+	  }
+	
+	@media only screen and (max-width: 1080px) {
+		article {
+			width:90%;
+		}
+	}
+	
+	  
+	  
+	  h1 {
+
+		padding: 20px;
+		margin: 0px;
+		background-color: black;
+		text-shadow: 2px 2px 3px #ababab;
+		font-size: 4.5em;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 1080px;
+		
+	  }
+	  
+	  h2 {
+	  		font-size: 3em;
+			padding: 20px;
+			text-shadow: 2px 2px 3px #ababab;
+			margin:0px;
+			margin-top: 20px;
+	  }
+	  
+	header{
+	  	width:100%;
+		background-color:black;
+		color: white;
+		font-family: Delicious;
+	  }
+	  
+	  
+	  header.gameHeader {
+			border-top-left-radius: 20px;
+			border-top-right-radius: 20px;
+	  }
+	  
+	  .textSection{
+		font-family: Delicious;
+		background-color:black;
+		color:white;
+		padding:20px;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+	  }
+	  
+	  .textSection input[type="number"]{
+		background-color:black;
+		color: white;
+		font-family: Delicious;
+		font-size:1.3em;
+	  }
+	  
+	  .btn {
+		  background: #6b6b6b;
+		  background-image: -webkit-linear-gradient(top, #6b6b6b, #323333);
+		  background-image: -moz-linear-gradient(top, #6b6b6b, #323333);
+		  background-image: -ms-linear-gradient(top, #6b6b6b, #323333);
+		  background-image: -o-linear-gradient(top, #6b6b6b, #323333);
+		  background-image: linear-gradient(to bottom, #6b6b6b, #323333);
+		  -webkit-border-radius: 28;
+		  -moz-border-radius: 28;
+		  border-radius: 28px;
+		  text-shadow: 1px 1px 3px #0f0f0f;
+		  font-family: Delicious;
+		  color: #ffffff;
+		  padding: 10px 10px 10px 10px;
+		  text-decoration: none;
+		  font-size:1.1em;
+		}
+
+		.btn:hover {
+		  background: #cfcfcf;
+		  background-image: -webkit-linear-gradient(top, #cfcfcf, #8a8a8a);
+		  background-image: -moz-linear-gradient(top, #cfcfcf, #8a8a8a);
+		  background-image: -ms-linear-gradient(top, #cfcfcf, #8a8a8a);
+		  background-image: -o-linear-gradient(top, #cfcfcf, #8a8a8a);
+		  background-image: linear-gradient(to bottom, #cfcfcf, #8a8a8a);
+		  text-decoration: none;
+		}
+	  
+	  @font-face {
+		font-family: Delicious-Heavy;
+		src: url("fonts/Delicious-Heavy.otf") format("opentype");
+		}
+			  @font-face {
+		font-family: Delicious;
+		src: url("fonts/Delicious-Roman.otf") format("opentype");
+		}
+	
+	
+		a[href^="http://maps.google.com/maps"]{display:none !important}
+
+		.gmnoprint a, .gmnoprint span {
+			display:none;
+		}
+		.gmnoprint div {
+			background:none !important;
+		}
+		
+		.gm-style-cc{
+			display:none;
+		}
+		
+		                #content {
+                    padding: 0 !important; 
+                    position : absolute !important; 
+                    top : 0 !important; 
+                    right : 0 !important; 
+                    bottom : 40px !important;  
+                    left : 0 !important;     
+                }
+	#pano img {
+		border: none !important;
+		max-width: none !important;
+	}
+    </style>
+ <script src="javascripts/jquery-2.1.1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+
+
+
+$(function(){
+	var londonCoords = new google.maps.LatLng(51.507222, -0.127500);
+	var map;
+	var sv;
+	var panorama;
+	var randomPlace;
+	var userLoc;
+	var marker1;
+	var marker2;
+	var totalScore = 0;
+	var usingSetCoords = false;
+	
+	var currentMap = 1;
+	var numOfRounds = 5;
+
+	var actualDist;
+
+	$("#rounds").html(numOfRounds);
+	
+	function toRadians(angle) {
+	  return angle * Math.PI / 180;
+	};
+
+	function getDistance(p1, p2) {
+	  var R = 6378.137; // Earth’s mean toRadiansius in kilometres
+	  var dLat = toRadians(p2.B - p1.B);
+	  var dLong = toRadians(p2.k - p1.k);
+	  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+		Math.cos(toRadians(p1.B)) * Math.cos(toRadians(p2.B)) *
+		Math.sin(dLong / 2) * Math.sin(dLong / 2);
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  var d = R * c;
+	  return d; // returns the distance in meter
+	};
+		
+	function setupMap(){
+		$("#map-canvas").html("");
+		marker1 = null;
+		marker2 = null;
+	map = null;
+		var mapOptions = {
+		streetViewControl: false,
+		zoomControl: false,
+		mapTypeControl: false
+		};
+		
+	   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+		var bounds = new google.maps.LatLngBounds(null);
+		
+		marker1 = new google.maps.Marker({
+			position: randomPlace,
+			map: map
+		  });
+
+		  //extend the bounds to include each marker's position
+		  bounds.extend(marker1.position);
+		  
+		 marker2 = new google.maps.Marker({
+			position: userLoc,
+			map: map
+		  });
+
+		  //extend the bounds to include each marker's position
+		 bounds.extend(marker2.position);
+
+		map.fitBounds(bounds);
+		map.panToBounds(bounds);
+		google.maps.event.trigger(map, 'resize');
+	}
+
+	function initialize() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(setUserLoc, setLondonLoc);
+			}else{
+				setLondonLoc();
+			}
+	
+		$("#roundNo").html(currentMap);
+	 sv = new google.maps.StreetViewService();
+		var long = ((Math.random() * 360) - 180).toFixed(6);
+		var lat =  ((Math.random() * 180) - 90).toFixed(6);
+		randomPlace = new google.maps.LatLng(lat, long);
+		  sv.getPanoramaByLocation(randomPlace, 60000, processSVData);
+	}
+
+	function processSVData(data, status) {
+		if (panorama != null){
+				panorama.setVisible(false);
+		}
+	  if (status == google.maps.StreetViewStatus.OK) {
+	   var panoramaOptions = {
+		position: randomPlace,
+		addressControl: false,
+		linksControl: false,
+		panControl: false,
+		zoomControlOptions: {
+		  style: google.maps.ZoomControlStyle.SMALL
+		},
+		enableCloseButton: false,
+		pov: {
+				  heading: (Math.random() * 360),
+					pitch: 0
+		  }
+	  };
+	  	  panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+		$("#gameSection").show();
+		$("#guessSection").show();
+		panorama.setPano(data.location.pano);
+		panorama.setVisible(true);
+
+
+	  } else {
+		initialize();
+	  }
+	}
+
+	$("#nextRound").click(function(){
+		$("#resultSection").hide();
+		$("#answerSection").hide();
+		initialize();
+	});
+
+	$("#guessSubmit").click(function(){
+
+getDistanceFromPan();
+
+
+	});
+	
+	function setUserLoc(position){
+		userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		usingSetCoords = false;
+		$("#guessLabel").html("How far are you from this place? (km)");
+	}
+	
+		function setLondonLoc(){
+		userLoc = londonCoords;
+		usingSetCoords = true;
+		$("#guessLabel").html("How far is London from this place? (km)");
+	}
+
+	function getDistanceFromPan() {
+		 if (!isNaN($("#distGuess").val())){
+			var guess = $("#distGuess").val();
+
+			actualDist = getDistance(userLoc, randomPlace);
+			var closeness = actualDist - guess; 
+			var loc = "";
+			if (usingSetCoords){
+				loc = "London";
+			}
+			else {
+				loc = "your location";
+			}
+			
+			$("#ans").html("You were " + Math.abs(closeness).toFixed(0) + "km off. Actual distance from " + loc +  " was " + actualDist.toFixed(0) + "km.");
+			var score = 0;
+			if (closeness < 0){
+				 score= ((Math.abs(guess)/actualDist)*100).toFixed(0);
+				 score = score - 100;
+				 score = 100 - score;
+				 if(score < 0){
+				 score = 0;
+				}
+			}
+			else{
+				score= ((Math.abs(guess)/actualDist)*100).toFixed(0);
+			}
+			totalScore += parseInt(score);
+			if (isNaN(score)){
+				$("#score").html("actual Dist: " + actualDist + " closeness: " + closeness + parseInt($("#score").html()) + parseInt(score));
+			}else {
+				$("#score").html(parseInt($("#score").html()) + parseInt(score));
+			}
+			$("#distGuess").val('');
+			$("#gameSection").hide();
+			$("#guessSection").hide();
+			displayResult();
+		}
+	}	
+
+	function displayResult(){
+		currentMap += 1;
+
+		$("#resultSection").show();
+		
+		if (currentMap <= numOfRounds){			
+			setupMap();	
+			$("#answerSection").show();
+		}else {
+			$("#finalScoreSection").show();
+			$("#finalScore").html(totalScore);	
+		}
+		
+
+	}
+
+	initialize();
+});
+
+
+    </script>
+  </head>
+  <body>
+	<header class="mainHeader">
+		<h1>How far?</h1>
+	</header>
+	<article id="game">
+		<header class="gameHeader">
+			<h2>Round <span id="roundNo"></span>/<span id="rounds"></span></h2>
+		</header>
+		<section id="gameSection" style="display:none;height:60%; width:100%">
+			<div id="pano" style="width:100%;height:100%;float:left"></div>
+		</section>
+		<section id="resultSection" style="display:none; height:60%; width:100%">
+		   <div id="map-canvas" style="width: 100%;height: 100%;float:left"></div>
+		</section>
+		<section id="guessSection" class="textSection" style="display:none">
+			<label for="distGuess" id="guessLabel"></label>
+			<input type="number" step="500"  id="distGuess" />
+			<input type="button" id="guessSubmit" class="btn" value="Guess" />
+		</section>
+		<section id="answerSection"  class="textSection" style="display:none">
+			<p id="ans"></p>
+			Total Score: <span id="score">0</span>
+			<input type="button" id="nextRound" class="btn" value="Next Map" />
+		</section>
+		<section id="finalScoreSection" class="textSection" style="display:none">
+			Final Score: <span id="finalScore"></span>
+		</section>
+	</article>
+  </body>
+</html>
