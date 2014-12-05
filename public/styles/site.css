@@ -1,18 +1,71 @@
 	  @font-face {
-		font-family: Delicious-Heavy;
-		src: url("fonts/Delicious-Heavy.otf") format("opentype");
+		font-family: FingerPaint;
+		src: url("fonts/FingerPaint-Regular.ttf");
 		}
 			  @font-face {
 		font-family: Delicious;
 		src: url("fonts/Delicious-Roman.otf") format("opentype");
 		} 
-
+		
  html, body, #map-canvas {
         height: 100%;
         margin: 0px;
         padding: 0px
 		
       }
+	
+a {text-decoration: none; color:white;}
+
+a:hover{
+	color:white;
+}
+a:visited{
+	color:white;
+}
+	
+	  body{
+	  
+		background-color: #848D82;
+	  
+	  }
+	  
+body.gameOver{
+    -webkit-animation: gameOver 5s; /* Chrome, Safari, Opera */
+    animation: gameOver 5s;
+	animation-fill-mode: forwards;  
+
+}
+
+body.restart{
+    -webkit-animation: restart 5s; /* Chrome, Safari, Opera */
+    animation: restart 5s;
+	animation-fill-mode: forwards;  
+
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes gameOver {
+    from {background: #848D82;}
+    to {background: #FD6E8A;}
+}
+
+/* Standard syntax */
+@keyframes gameOver {
+    from {background: #848D82;}
+    to {background: #FD6E8A;}
+}
+@-webkit-keyframes restart {
+    from {background: #FD6E8A;}
+    to {background: #848D82;}
+}
+
+/* Standard syntax */
+@keyframes restart {
+    from {background: #FD6E8A;}
+    to {background: #848D82;}
+}
+
+	  
 
 	  	@media only screen and (max-width: 600px) {
 			
@@ -30,6 +83,8 @@
 		height:60%;
 	  }
 	
+	
+	
 	@media only screen and (max-width: 1080px) {
 		article {
 			width:90%;
@@ -40,32 +95,86 @@
 	  
 	  h1 {
 
-		padding: 20px;
+		padding: 10px;
+		padding-bottom:0px;
 		margin: 0px;
-		background-color: black;
 		text-shadow: 2px 2px 3px #ababab;
 		font-size: 4.5em;
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 1080px;
-		
+		font-weight: lighter;
 	  }
 	  
+	  h3 {
+
+		padding: 10px;
+		padding-left:20px;
+		padding-top: 0px;
+		margin: 0px;
+		text-shadow: 2px 2px 3px #ababab;
+		font-size: 1.5em;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 1080px;
+		font-weight: lighter;
+	  }
+	  
+	  
 	  h2 {
-	  		font-size: 3em;
-			padding: 20px;
-			text-shadow: 2px 2px 3px #ababab;
+	  		font-size: 2.5em;
+			padding: 10px;
+			padding-left:20px;
+			padding-right:20px;
+			text-shadow: 4px 2px 3px #2C3B63;
 			margin:0px;
-			margin-top: 20px;
+			font-weight: lighter;
+			font-family: Delicious;
 	  }
 	  
 	header{
 	  	width:100%;
-		background-color:black;
+		background-color: #250352;
 		color: white;
-		font-family: Delicious;
+		font-family: FingerPaint;
+		border-bottom: 10px solid #2C3B63;
+
+	  }
+	
+	#logo{
+		vertical-align: middle;
+	}
+	
+	#logo.spin{
+		-webkit-animation:spin 1s linear;
+		-moz-animation:spin 1s linear;
+		animation:spin 1s linear;
+		-webkit-transform-origin: 50% 50%;
+		-moz-transform-origin: 50% 50%;
+		-o-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;	
+	}
+	  .navSect{
+		width:100%;
 	  }
 	  
+	  nav{
+		padding:20px;
+	  	max-width:1080px;
+		color: white;
+		font-family: FingerPaint;
+		margin-left: auto;
+		margin-right: auto;
+
+	  }
+	  nav a:hover {
+		color: #250352;
+	  }
+	  
+	  .mainHeader {
+	  	border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+	  }
 	  
 	  header.gameHeader {
 			border-top-left-radius: 20px;
@@ -74,34 +183,35 @@
 	  
 	  .textSection{
 		font-family: Delicious;
-		background-color:black;
+		background-color:#2C3B63;
 		color:white;
 		padding:20px;
 		border-bottom-left-radius: 20px;
 		border-bottom-right-radius: 20px;
+		border-bottom: 10px solid #250352;
 	  }
 	  
-	  .textSection input{
-		background-color:black;
+	  #favSection{
+		font-family: Delicious;
+		color:white;
+	  }
+	  
+	  .textSection input[type="number"]{
+		background-color:#2C3B63;
 		color: white;
 		font-family: Delicious;
 		font-size:1.3em;
 	  }
 	  
 	   select{
-		background-color:black;
+		background-color:#2C3B63;
 		color: white;
 		font-family: Delicious;
 		font-size:1.3em;
 	  }
 	  
 	  .btn {
-		  background: #6b6b6b;
-		  background-image: -webkit-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -moz-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -ms-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -o-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: linear-gradient(to bottom, #6b6b6b, #323333);
+		  background: #848D82;
 		  -webkit-border-radius: 28;
 		  -moz-border-radius: 28;
 		  border-radius: 28px;
@@ -114,13 +224,9 @@
 		}
 
 		.btn:hover {
-		  background: #cfcfcf;
-		  background-image: -webkit-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -moz-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -ms-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -o-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: linear-gradient(to bottom, #cfcfcf, #8a8a8a);
+			background: #250352;
 		  text-decoration: none;
+		  cursor:pointer;
 		}
 	  
 
@@ -161,3 +267,49 @@
 		margin-left: -50px;
 		margin-top: -30px;		
 	}
+	
+	#heartShape:hover{
+			cursor: pointer;
+	}
+	
+	.favourited, .alreadyFavourited {
+  background: #FD6E8A;
+  width: 100%;
+  transition: all 1s linear;
+  display: block;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.favouritedHidden {
+  display: none;
+}
+
+.favouritedInvis {
+  opacity: 0;
+}
+
+
+#noPansSection{
+		background-color: #2C3B63;
+		margin:0px;
+}
+.noPansText{
+		font-family: Delicious;
+		color:white;
+		padding:20px;
+		margin:0px;
+}
+
+#heartShape.spin {
+    -webkit-animation:spin 1s linear;
+    -moz-animation:spin 1s linear;
+    animation:spin 1s linear;
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(-360deg); } }

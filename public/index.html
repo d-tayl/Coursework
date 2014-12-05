@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
   <head>
     <meta charset="utf-8">
     <title>How far?</title>
@@ -18,7 +17,7 @@ $(function(){
 	var marker2;
 	var totalScore = 0;
 	var usingSetCoords = false;
-	
+	var isFavourited = false;
 	var currentMap = 1;
 	var numOfRounds = 5;
 
@@ -77,6 +76,18 @@ $(function(){
 		google.maps.event.trigger(map, 'resize');
 	}
 
+	function checkIfFavourited(){
+		for (i = 0; i < localStorage.length; i++) {
+			var itemKey = localStorage.key(i);
+			if (itemKey.indexOf("Panorama") > -1){
+				var value = localStorage.getItem(itemKey);
+				if (value == (randomPlace.k + "," + randomPlace.B)){
+					 isFavourited = true;
+				}
+			}
+		}
+	}
+	
 	function initialize() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(setUserLoc, setLondonLoc);
@@ -98,6 +109,16 @@ $(function(){
 		}
 	  if (status == google.maps.StreetViewStatus.OK) {
 	  randomPlace = data.location.latLng;
+	  
+	  			$("#heartShape").attr("class","");
+		isFavourited = false;
+		checkIfFavourited();
+		
+
+			setFavourited();
+		
+		
+
 	   var panoramaOptions = {
 		position: randomPlace,
 		addressControl: false,
@@ -198,21 +219,92 @@ getDistanceFromPan();
 			setupMap();	
 			$("#answerSection").show();
 		}else {
+			$('body').removeClass('restart').addClass('gameOver');
 			$("#finalScoreSection").show();
 			$("#finalScore").html(totalScore);	
-		}
-		
 
+		}
 	}
 	
-	$('#svgHeart').click(function(){
-		var noOfFavs = localStorage.length;
-		var storageKey = "Panorama" + noOfFavs;
-		var coords = randomPlace.k + "," + randomPlace.B;
-		localStorage.setItem(storageKey,coords);
-		alert("Added to favs");
+	$("#heartShape").hover( function(){
+				$("#heartShape").attr('fill', "#250352");	
+			},
+			function(){
+				setFavourited();	
+	});
+	
+			$("#mainTitle").hover( function(){
+				$("#logo").attr('class', "spin");	
+			},
+			function(){
+				$("#logo").attr('class', "");		
+			});
+
+	
+	function setFavourited(){
+			if(isFavourited){
+		$("#heartShape").attr('fill', "#FD6E8A");
+		}else {
+			$("#heartShape").attr('fill', "#848D82");	
+		}
+	}
+	
+	$('#heartShape').click(function(){
+		if(!isFavourited){
+			var noOfFavs = localStorage.length;
+			var storageKey = "Panorama " + noOfFavs;
+			var coords = randomPlace.k + "," + randomPlace.B;
+			
+			
+			localStorage.setItem(storageKey,coords);
+			isFavourited = true;	
+			setFavourited();
+			$("#heartShape").attr("class","spin");
+			var favText = $("#favText");
+			favText.removeClass('favouritedHidden');
+			setTimeout(function () {
+			  favText.removeClass('favouritedInvis');
+			}, 20);
+			setTimeout(function (){
+				favText.addClass('favouritedInvis');
+			
+				favText.one('transitionend', function(e) {
+
+				  favText.addClass('favouritedHidden');
+
+				});
+			
+			}, 600);
+		} else {
+			var alreadyFavText = $("#alreadyFavText");
+			alreadyFavText.removeClass('favouritedHidden');
+			setTimeout(function () {
+			  alreadyFavText.removeClass('favouritedInvis');
+			}, 20);
+			setTimeout(function (){
+				alreadyFavText.addClass('favouritedInvis');
+			
+				alreadyFavText.one('transitionend', function(e) {
+
+				  alreadyFavText.addClass('favouritedHidden');
+
+				});
+			
+			}, 600);
+		}
+
 	});
 
+	$("#restart").click(function(){
+		$('body').removeClass('gameOver').addClass('restart');
+		totalScore = 0;
+		currentMap = 1;
+		$("#distGuess").val('');
+			$("#resultSection").hide();
+			$("#finalScoreSection").hide();
+		initialize();
+	});	
+	
 	initialize();
 });
 
@@ -221,8 +313,24 @@ getDistanceFromPan();
   </head>
   <body>
 	<header class="mainHeader">
-		<h1>How far?</h1>
+		<a href="/">
+			<h1 id="mainTitle">			
+				How far
+				<svg height="90" width="90" id="logo">
+				  <circle cx="45" cy="45" r="42" stroke="red" stroke-width="3" fill="red"></circle>  
+				  <text x="30" y="65" fill="white" font-size="70px">?</text>
+				  SVG not supported.
+				</svg>
+			</h1>
+		</a>
+		<h3>Know your place.</h3>
 	</header>
+	<section class="navSect">
+		<nav>
+			<a href="/">Home</a> |
+			<a href="/favourites.html">Favourites</a> 
+		</nav>
+	</section>
 	<article id="game">
 		<header class="gameHeader">
 			<h2>Round <span id="roundNo"></span>/<span id="rounds"></span></h2>
@@ -233,13 +341,20 @@ getDistanceFromPan();
 		<section id="resultSection" style="display:none; height:60%; width:100%">
 		   <div id="map-canvas" style="width: 100%;height: 100%;float:left"></div>
 		</section>
+		<section id="favSection">
+			<span id="favText" class="favourited favouritedHidden">You have added this panorama to your favourites!</span>
+			<span id="alreadyFavText" class="favourited favouritedHidden">This panorama is already in your favourites!</span>
+		</section>
 		<section id="guessSection" class="textSection" style="display:none">
 			<label for="distGuess" id="guessLabel"></label>
 			<input type="number" step="500"  id="distGuess" />
 			<input type="button" id="guessSubmit" class="btn" value="Guess" />
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
-			id="svgHeart" x="0px" y="0px" width="400px" height="400px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
-				<path xmlns="http://www.w3.org/2000/svg" fill="red" d="M390.574,184.277c-2.134-6.021-1.86-4.98-3.722-10.071    c-12.698-31.909-45.655-45.34-76.7-39.93c-29.4,5.123-50.815,31.75-55.317,50.001c-0.01,0-0.018,0-0.028,0l0,0h-6.979v-0.018    h-0.001c-4.502-18.25-25.917-44.879-55.317-50.001c-31.044-5.409-64.001,8.021-76.7,39.93c-1.861,5.091-1.587,4.051-3.722,10.071    c-32.622,122.603,87.136,105.635,139.243,196.603v-0.045l0,0.064C303.438,289.914,423.195,306.882,390.574,184.277z">
+				id="svgHeart" x="0px" y="0px" width="400px" height="400px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+				<path id="heartShape" xmlns="http://www.w3.org/2000/svg" fill="#848D82" d="M390.574,184.277c-2.134-6.021-1.86-4.98-3.722-10.071    
+					c-12.698-31.909-45.655-45.34-76.7-39.93c-29.4,5.123-50.815,31.75-55.317,50.001c-0.01,0-0.018,0-0.028,0l0,0h-6.979v-0.018    
+					h-0.001c-4.502-18.25-25.917-44.879-55.317-50.001c-31.044-5.409-64.001,8.021-76.7,39.93c-1.861,5.091-1.587,4.051-3.722,10.071    
+					c-32.622,122.603,87.136,105.635,139.243,196.603v-0.045l0,0.064C303.438,289.914,423.195,306.882,390.574,184.277z">
 				</path>
 			</svg>
 				</section>
@@ -250,6 +365,7 @@ getDistanceFromPan();
 		</section>
 		<section id="finalScoreSection" class="textSection" style="display:none">
 			Final Score: <span id="finalScore"></span>
+			<input type="button" id="restart" class="btn" value="Play Again?">
 		</section>
 	</article>
   </body>
