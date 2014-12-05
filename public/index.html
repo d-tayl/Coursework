@@ -3,158 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>How far?</title>
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-		
-      }
-
-	  	@media only screen and (max-width: 600px) {
-			
-			#map-canvas {
-				height: 60%;
-			}
-		}
-	  
-	  article{
-		max-width:1080px;
-		width:100%;
-		margin-left:auto;
-		margin-right:auto;
-		font-size :1.3em;
-		height:60%;
-	  }
-	
-	@media only screen and (max-width: 1080px) {
-		article {
-			width:90%;
-		}
-	}
-	
-	  
-	  
-	  h1 {
-
-		padding: 20px;
-		margin: 0px;
-		background-color: black;
-		text-shadow: 2px 2px 3px #ababab;
-		font-size: 4.5em;
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 1080px;
-		
-	  }
-	  
-	  h2 {
-	  		font-size: 3em;
-			padding: 20px;
-			text-shadow: 2px 2px 3px #ababab;
-			margin:0px;
-			margin-top: 20px;
-	  }
-	  
-	header{
-	  	width:100%;
-		background-color:black;
-		color: white;
-		font-family: Delicious;
-	  }
-	  
-	  
-	  header.gameHeader {
-			border-top-left-radius: 20px;
-			border-top-right-radius: 20px;
-	  }
-	  
-	  .textSection{
-		font-family: Delicious;
-		background-color:black;
-		color:white;
-		padding:20px;
-		border-bottom-left-radius: 20px;
-		border-bottom-right-radius: 20px;
-	  }
-	  
-	  .textSection input[type="number"]{
-		background-color:black;
-		color: white;
-		font-family: Delicious;
-		font-size:1.3em;
-	  }
-	  
-	  .btn {
-		  background: #6b6b6b;
-		  background-image: -webkit-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -moz-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -ms-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: -o-linear-gradient(top, #6b6b6b, #323333);
-		  background-image: linear-gradient(to bottom, #6b6b6b, #323333);
-		  -webkit-border-radius: 28;
-		  -moz-border-radius: 28;
-		  border-radius: 28px;
-		  text-shadow: 1px 1px 3px #0f0f0f;
-		  font-family: Delicious;
-		  color: #ffffff;
-		  padding: 10px 10px 10px 10px;
-		  text-decoration: none;
-		  font-size:1.1em;
-		}
-
-		.btn:hover {
-		  background: #cfcfcf;
-		  background-image: -webkit-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -moz-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -ms-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: -o-linear-gradient(top, #cfcfcf, #8a8a8a);
-		  background-image: linear-gradient(to bottom, #cfcfcf, #8a8a8a);
-		  text-decoration: none;
-		}
-	  
-	  @font-face {
-		font-family: Delicious-Heavy;
-		src: url("fonts/Delicious-Heavy.otf") format("opentype");
-		}
-			  @font-face {
-		font-family: Delicious;
-		src: url("fonts/Delicious-Roman.otf") format("opentype");
-		}
-	
-	
-		a[href^="http://maps.google.com/maps"]{display:none !important}
-
-		.gmnoprint a, .gmnoprint span {
-			display:none;
-		}
-		.gmnoprint div {
-			background:none !important;
-		}
-		
-		.gm-style-cc{
-			display:none;
-		}
-		
-		                #content {
-                    padding: 0 !important; 
-                    position : absolute !important; 
-                    top : 0 !important; 
-                    right : 0 !important; 
-                    bottom : 40px !important;  
-                    left : 0 !important;     
-                }
-	#pano img {
-		border: none !important;
-		max-width: none !important;
-	}
-    </style>
- <script src="javascripts/jquery-2.1.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles/site.css">
+	<script src="javascripts/jquery-2.1.1.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
-
-
-
 $(function(){
 	var londonCoords = new google.maps.LatLng(51.507222, -0.127500);
 	var map;
@@ -245,6 +97,7 @@ $(function(){
 				panorama.setVisible(false);
 		}
 	  if (status == google.maps.StreetViewStatus.OK) {
+	  randomPlace = data.location.latLng;
 	   var panoramaOptions = {
 		position: randomPlace,
 		addressControl: false,
@@ -351,6 +204,14 @@ getDistanceFromPan();
 		
 
 	}
+	
+	$('#svgHeart').click(function(){
+		var noOfFavs = localStorage.length;
+		var storageKey = "Panorama" + noOfFavs;
+		var coords = randomPlace.k + "," + randomPlace.B;
+		localStorage.setItem(storageKey,coords);
+		alert("Added to favs");
+	});
 
 	initialize();
 });
@@ -376,7 +237,12 @@ getDistanceFromPan();
 			<label for="distGuess" id="guessLabel"></label>
 			<input type="number" step="500"  id="distGuess" />
 			<input type="button" id="guessSubmit" class="btn" value="Guess" />
-		</section>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" 
+			id="svgHeart" x="0px" y="0px" width="400px" height="400px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+				<path xmlns="http://www.w3.org/2000/svg" fill="red" d="M390.574,184.277c-2.134-6.021-1.86-4.98-3.722-10.071    c-12.698-31.909-45.655-45.34-76.7-39.93c-29.4,5.123-50.815,31.75-55.317,50.001c-0.01,0-0.018,0-0.028,0l0,0h-6.979v-0.018    h-0.001c-4.502-18.25-25.917-44.879-55.317-50.001c-31.044-5.409-64.001,8.021-76.7,39.93c-1.861,5.091-1.587,4.051-3.722,10.071    c-32.622,122.603,87.136,105.635,139.243,196.603v-0.045l0,0.064C303.438,289.914,423.195,306.882,390.574,184.277z">
+				</path>
+			</svg>
+				</section>
 		<section id="answerSection"  class="textSection" style="display:none">
 			<p id="ans"></p>
 			Total Score: <span id="score">0</span>

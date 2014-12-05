@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>How far?</title>
+ <script src="javascripts/jquery-2.1.1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<script type="text/javascript">
+		$(function(){
+			if(localStorage.length > 0){
+				for (i = 0; i < localStorage.length; i++) {
+					var itemKey = localStorage.key(i);
+					if (itemKey.indexOf("Panorama") > -1){
+						var value = localStorage.getItem(itemKey);
+						$('#favPanoramaList').append(
+							$('<option></option>').val(value).html(itemKey)
+						);
+					}
+				}
+			}
+			var sv;
+			var panorama;
+			var coords;
+			
+			$('#favPanoramaList').change(function(){
+				var coordString = $('#favPanoramaList').val();
+				if (coordString !== ""){
+					var coordsArray = coordString.split(",");
+					var lat = coordsArray[0];
+					var lon = coordsArray[1];
+					 coords = new google.maps.LatLng(lat, lon);
+						 sv = new google.maps.StreetViewService();
+						sv.getPanoramaByLocation(coords, 60000, processSVData);
+				}
+			});
+			
+			function processSVData(data, status) {
+		if (panorama != null){
+				panorama.setVisible(false);
+		}
+	  if (status == google.maps.StreetViewStatus.OK) {
+	   var panoramaOptions = {
+		position: coords,
+		addressControl: false,
+		linksControl: false,
+		panControl: false,
+		zoomControlOptions: {
+		  style: google.maps.ZoomControlStyle.SMALL
+		},
+		enableCloseButton: false,
+		pov: {
+				  heading: 270,
+					pitch: 0
+		  }
+	  };
+	  	  panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'), panoramaOptions);
+		panorama.setPano(data.location.pano);
+		panorama.setVisible(true);
+
+
+	  } else {
+	  }
+	}
+
+		});
+	</script>
+	<link rel="stylesheet" type="text/css" href="styles/site.css">
+  </head>
+  <body>
+	<header class="mainHeader">
+		<h1>How far?</h1>
+	</header>
+	<article id="game">
+		<header class="gameHeader">
+			<h2>Your favourite panoramas</h2>
+		</header>
+		<section id="gameSection" style="height:60%; width:100%">
+			<div id="pano" style="width:100%;height:100%;float:left"></div>
+		</section>
+		<section id="answerSection"  class="textSection">
+			<select id="favPanoramaList">
+				<option value="">Select a panorama</option>
+			</select>
+		</section>
+	</article>
+  </body>
+</html>
