@@ -1,315 +1,442 @@
-	  @font-face {
-		font-family: FingerPaint;
-		src: url("fonts/FingerPaint-Regular.ttf");
-		}
-			  @font-face {
-		font-family: Delicious;
-		src: url("fonts/Delicious-Roman.otf") format("opentype");
-		} 
-		
- html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-		
-      }
-	
-a {text-decoration: none; color:white;}
-
-a:hover{
-	color:white;
-}
-a:visited{
-	color:white;
-}
-	
-	  body{
-	  
-		background-color: #848D82;
-	  
-	  }
-	  
-body.gameOver{
-    -webkit-animation: gameOver 5s; /* Chrome, Safari, Opera */
-    animation: gameOver 5s;
-	animation-fill-mode: forwards;  
-
+/* Key frames for spin animation */
+@keyframes spin {
+    100% {
+        transform: rotate(-360deg);
+    }
 }
 
-body.restart{
-    -webkit-animation: restart 5s; /* Chrome, Safari, Opera */
-    animation: restart 5s;
-	animation-fill-mode: forwards;  
-
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(-360deg);
+    }
 }
 
-/* Chrome, Safari, Opera */
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(-360deg);
+    }
+}
+
+@-o-keyframes spin {
+    100% {
+        -o-transform: rotate(-360deg);
+    }
+}
+
+/* Game over animation */
 @-webkit-keyframes gameOver {
-    from {background: #848D82;}
-    to {background: #FD6E8A;}
+    from {
+        background: #848D82;
+    }
+
+    to {
+        background: #FD6E8A;
+    }
 }
 
-/* Standard syntax */
 @keyframes gameOver {
-    from {background: #848D82;}
-    to {background: #FD6E8A;}
+    from {
+        background: #848D82;
+    }
+
+    to {
+        background: #FD6E8A;
+    }
 }
+
+/* Restart animations */
 @-webkit-keyframes restart {
-    from {background: #FD6E8A;}
-    to {background: #848D82;}
+    from {
+        background: #FD6E8A;
+    }
+
+    to {
+        background: #848D82;
+    }
 }
 
-/* Standard syntax */
 @keyframes restart {
-    from {background: #FD6E8A;}
-    to {background: #848D82;}
+    from {
+        background: #FD6E8A;
+    }
+
+    to {
+        background: #848D82;
+    }
 }
 
-	  
+/* Web fonts for use on the site */
+@font-face {
+    font-family: FingerPaint;
+    src: url("fonts/FingerPaint-Regular.ttf");
+}
 
-	  	@media only screen and (max-width: 600px) {
-			
-			#map-canvas {
-				height: 60%;
-			}
-		}
-	  
-	  article{
-		max-width:1080px;
-		width:100%;
-		margin-left:auto;
-		margin-right:auto;
-		font-size :1.3em;
-		height:60%;
-	  }
-	
-	
-	
-	@media only screen and (max-width: 1080px) {
-		article {
-			width:90%;
-		}
-	}
-	
-	  
-	  
-	  h1 {
+@font-face {
+    font-family: Delicious;
+    src: url("fonts/Delicious-Roman.otf") format("opentype");
+}
 
-		padding: 10px;
-		padding-bottom:0px;
-		margin: 0px;
-		text-shadow: 2px 2px 3px #ababab;
-		font-size: 4.5em;
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 1080px;
-		font-weight: lighter;
-	  }
-	  
-	  h3 {
+html, body, #map-canvas {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
 
-		padding: 10px;
-		padding-left:20px;
-		padding-top: 0px;
-		margin: 0px;
-		text-shadow: 2px 2px 3px #ababab;
-		font-size: 1.5em;
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 1080px;
-		font-weight: lighter;
-	  }
-	  
-	  
-	  h2 {
-	  		font-size: 2.5em;
-			padding: 10px;
-			padding-left:20px;
-			padding-right:20px;
-			text-shadow: 4px 2px 3px #2C3B63;
-			margin:0px;
-			font-weight: lighter;
-			font-family: Delicious;
-	  }
-	  
-	header{
-	  	width:100%;
-		background-color: #250352;
-		color: white;
-		font-family: FingerPaint;
-		border-bottom: 10px solid #2C3B63;
+a {
+    text-decoration: none;
+    color: white;
+}
 
-	  }
-	
-	#logo{
-		vertical-align: middle;
-	}
-	
-	#logo.spin{
-		-webkit-animation:spin 1s linear;
-		-moz-animation:spin 1s linear;
-		animation:spin 1s linear;
-		-webkit-transform-origin: 50% 50%;
-		-moz-transform-origin: 50% 50%;
-		-o-transform-origin: 50% 50%;
-		transform-origin: 50% 50%;	
-	}
-	  .navSect{
-		width:100%;
-	  }
-	  
-	  nav{
-		padding:20px;
-	  	max-width:1080px;
-		color: white;
-		font-family: FingerPaint;
-		margin-left: auto;
-		margin-right: auto;
+    a:hover {
+        color: white;
+    }
 
-	  }
-	  nav a:hover {
-		color: #250352;
-	  }
-	  
-	  .mainHeader {
-	  	border-bottom-left-radius: 20px;
-		border-bottom-right-radius: 20px;
-	  }
-	  
-	  header.gameHeader {
-			border-top-left-radius: 20px;
-			border-top-right-radius: 20px;
-	  }
-	  
-	  .textSection{
-		font-family: Delicious;
-		background-color:#2C3B63;
-		color:white;
-		padding:20px;
-		border-bottom-left-radius: 20px;
-		border-bottom-right-radius: 20px;
-		border-bottom: 10px solid #250352;
-	  }
-	  
-	  #favSection{
-		font-family: Delicious;
-		color:white;
-	  }
-	  
-	  .textSection input[type="number"]{
-		background-color:#2C3B63;
-		color: white;
-		font-family: Delicious;
-		font-size:1.3em;
-	  }
-	  
-	   select{
-		background-color:#2C3B63;
-		color: white;
-		font-family: Delicious;
-		font-size:1.3em;
-	  }
-	  
-	  .btn {
-		  background: #848D82;
-		  -webkit-border-radius: 28;
-		  -moz-border-radius: 28;
-		  border-radius: 28px;
-		  text-shadow: 1px 1px 3px #0f0f0f;
-		  font-family: Delicious;
-		  color: #ffffff;
-		  padding: 10px 10px 10px 10px;
-		  text-decoration: none;
-		  font-size:1.1em;
-		}
+    a:visited {
+        color: white;
+    }
 
-		.btn:hover {
-			background: #250352;
-		  text-decoration: none;
-		  cursor:pointer;
-		}
-	  
+body {
+    background-color: #848D82;
+}
 
-	
-	
-		a[href^="http://maps.google.com/maps"]{display:none !important}
+    body.gameOver {
+        -webkit-animation: gameOver 5s; 
+        animation: gameOver 5s;
+        animation-fill-mode: forwards;
+    }
 
-		.gmnoprint a, .gmnoprint span {
-			display:none;
-		}
-		.gmnoprint div {
-			background:none !important;
-		}
-		
-		.gm-style-cc{
-			display:none;
-		}
-		
-		#content {
-			padding: 0 !important; 
-			position : absolute !important; 
-			top : 0 !important; 
-			right : 0 !important; 
-			bottom : 40px !important;  
-			left : 0 !important;     
-		}
-		
-	#pano img {
-		border: none !important;
-		max-width: none !important;
-	}
-	
-	#svgHeart{
-		width: 80px;
-		height: 80px;
-		vertical-align: bottom;	
-		float:right;	
-		margin-left: -50px;
-		margin-top: -30px;		
-	}
-	
-	#heartShape:hover{
-			cursor: pointer;
-	}
-	
-	.favourited, .alreadyFavourited {
-  background: #FD6E8A;
-  width: 100%;
-  transition: all 1s linear;
-  display: block;
-	box-sizing: border-box;
-	padding: 10px;
+    body.restart {
+        -webkit-animation: restart 5s; 
+        animation: restart 5s;
+        animation-fill-mode: forwards;
+    }
+
+article {
+    max-width: 1080px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.3em;
+    height: 60%;
+}
+
+@media only screen and (max-width: 1080px) {
+    article {
+        width: 90%;
+    }
+}
+
+h1 {
+    padding: 10px;
+    padding-bottom: 0px;
+    margin: 0px;
+    text-shadow: 2px 2px 3px #ababab;
+    font-size: 4.5em;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
+    font-weight: lighter;
+}
+
+h3 {
+    padding: 10px;
+    padding-left: 20px;
+    padding-top: 0px;
+    margin: 0px;
+    text-shadow: 2px 2px 3px #ababab;
+    font-size: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
+    font-weight: lighter;
+}
+
+h2 {
+    font-size: 2.5em;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-shadow: 4px 2px 3px #2C3B63;
+    margin: 0px;
+    font-weight: lighter;
+    font-family: Delicious;
+}
+
+header {
+    width: 100%;
+    background-color: #250352;
+    color: white;
+    font-family: FingerPaint;
+    border-bottom: 10px solid #2C3B63;
+}
+
+#logo {
+    vertical-align: middle;
+    margin-top: -22px;
+}
+
+    #logo.spin {
+        -webkit-animation: spin 1s linear;
+        -moz-animation: spin 1s linear;
+        animation: spin 1s linear;
+        -webkit-transform-origin: 50% 50%;
+        -moz-transform-origin: 50% 50%;
+        -o-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+
+.navSect {
+    width: 100%;
+}
+
+nav {
+    padding: 20px;
+    max-width: 1080px;
+    color: white;
+    font-family: FingerPaint;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    nav a:hover {
+        color: #250352;
+    }
+
+.mainHeader {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+header.gameHeader {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.textSection {
+    font-family: Delicious;
+    background-color: #2C3B63;
+    color: white;
+    padding: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom: 10px solid #250352;
+}
+
+#favSection {
+    font-family: Delicious;
+    color: white;
+}
+
+input[type="number"], input[type="datalist"], input[type="text"], input[type="email"] {
+    background-color: #2C3B63;
+    color: white;
+    font-family: Delicious;
+    font-size: 1.3em;
+}
+
+select {
+    background-color: #2C3B63;
+    color: white;
+    font-family: Delicious;
+    font-size: 1.3em;
+}
+
+.btn {
+    background: #848D82;
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    text-shadow: 1px 1px 3px #0f0f0f;
+    font-family: Delicious;
+    color: #ffffff;
+    padding: 10px 10px 10px 10px;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+    .btn:hover {
+        background: #250352;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+a[href^="http://maps.google.com/maps"] {
+    display: none !important;
+}
+
+.gmnoprint a, .gmnoprint span {
+    display: none;
+}
+
+.gmnoprint div {
+    background: none !important;
+}
+
+.gm-style-cc {
+    display: none;
+}
+
+#content {
+    padding: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 40px !important;
+    left: 0 !important;
+}
+
+#pano img {
+    border: none !important;
+    max-width: none !important;
+}
+
+#svgHeart {
+width: 80px;
+height: 80px;
+margin-top: -90px;
+display: block;
+float: right;
+}
+
+#heartShape:hover {
+    cursor: pointer;
+}
+
+#distGuess{
+	margin-bottom: 10px;
+}
+
+.favourited, .alreadyFavourited {
+    background: #FD6E8A;
+    width: 100%;
+    transition: all 1s linear;
+    display: block;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .favouritedHidden {
-  display: none;
+    display: none;
 }
 
 .favouritedInvis {
-  opacity: 0;
+    opacity: 0;
 }
 
-
-#noPansSection{
-		background-color: #2C3B63;
-		margin:0px;
+#noPansSection {
+    background-color: #2C3B63;
+    margin: 0px;
+    width: 100%;
+    display: none;
 }
-.noPansText{
-		font-family: Delicious;
-		color:white;
-		padding:20px;
-		margin:0px;
+
+.noPansText {
+    font-family: Delicious;
+    color: white;
+    padding: 20px;
+    margin: 0px;
 }
 
 #heartShape.spin {
-    -webkit-animation:spin 1s linear;
-    -moz-animation:spin 1s linear;
-    animation:spin 1s linear;
-	-webkit-transform-origin: 50% 50%;
-	-moz-transform-origin: 50% 50%;
-	-o-transform-origin: 50% 50%;
-	transform-origin: 50% 50%;
+    animation: spin 1s linear;
+    -webkit-animation: spin 1s linear;
+    -moz-animation: spin 1s linear;
+    -o-animation: spin 1s linear;
+    transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 40px 40px;
+    -o-transform-origin: 50% 50%;
 }
-@-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(-360deg); } }
+
+.formSection input, .formSection select, .formSection label {
+    width: 45%;
+    display: inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.formSection {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#resultSection, #gameSection {
+    display: none;
+    height: 60%;
+    width: 100%;
+}
+
+.gmapObject {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+	canvas:hover {
+		cursor: pointer;
+	}
+
+#canvasSection canvas {
+	background-color: #FFF;
+}
+
+.redBtn {
+    background-color: #df4b26;
+}
+
+.greenBtn {
+    background-color: #5DFC0A;
+}
+
+.blueBtn {
+    background-color: #00688B;
+}
+
+.yellowBtn {
+    background-color: #FFFF00;
+}
+
+.blackBtn {
+    background-color: #000000;
+}
+
+#guessDiv{
+	width:80%;
+}
+
+#guessLabel{
+	margin-bottom: 10px;
+	display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    h1 {
+		font-size: 3.5em;
+	}
+	
+	h2 {
+		font-size: 1.5em;
+	}
+	
+	h3{
+		font-size: 1.0em;
+	}
+	
+	nav a{
+		font-size: 0.9em;
+	}
+	
+	article{
+		font-size: 1.0em;
+	}
+	
+	#map-canvas {
+        height: 60%;
+    }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html manifest="offline.appcache" >
+	<head>
+		<meta charset="utf-8" />
+		<title>Offline | How far?</title>
+		<link rel="stylesheet" type="text/css" href="styles/site.css" />
+		<script src="javascripts/jquery-2.1.1.js"></script>
+		<script src="javascripts/site.js"></script>
+		<script src="javascripts/offline.js"></script>
+	</head>
+	<body>
+		<header class="mainHeader">
+			<a href="/">
+				<h1 id="mainTitle">			
+				How far
+					<svg height="90" width="90" id="logo">
+						<circle cx="45" cy="45" r="42" stroke="red" stroke-width="3" fill="red"></circle>  
+						<text x="30" y="65" fill="white" font-size="70px">?</text>
+				  SVG not supported.
+					</svg>
+				</h1>
+			</a>
+			<h3>Know your place.</h3>
+		</header>
+		<section class="navSect">
+			<nav>
+				<a href="/">Home</a> |
+				<a href="/favourites.html">Favourites</a> |
+				<a href="/contactus.html">Contact Us</a> 
+			</nav>
+		</section>
+		<article id="game">
+			<header class="gameHeader">
+				<h2>Offline </h2>
+			</header>
+			<section id="canvasSection">
+				<canvas id="pityCanvas" width="1080" height="350"></canvas>
+			</section>
+			<section id="offlineSection" class="textSection">
+				<div id="canvasControls">
+					<input id="cnvRed" type="button" value="Red" class="btn redBtn" />
+					<input id="cnvGreen" type="button" value="Green" class="btn greenBtn" />
+					<input id="cnvBlue" type="button" value="Blue" class="btn blueBtn" />
+					<input id="cnvYellow" type="button" value="Yellow" class="btn yellowBtn" />
+					<input id="cnvBlack" type="button" value="Black" class="btn blackBtn" />
+					<input id="cnvClear" type="button" value="Clear" class="btn clearBtn" />
+					<p> You're offline. While you can't play this super awesome game, you can make some pretty drawings!</p>
+				</div>
+			</section>
+		</article>
+	</body>
+</html>

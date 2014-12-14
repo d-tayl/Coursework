@@ -2,11 +2,15 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Favourites | How far?</title>
+		<title>Thank you | How far?</title>
+		<link rel="stylesheet" type="text/css" href="styles/site.css" />
 		<script src="javascripts/jquery-2.1.1.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-		<script src="/javascripts/favourites.js"></script>
-		<link rel="stylesheet" type="text/css" href="styles/site.css" />
+		<script src="javascripts/site.js"></script>
+		<script src="javascripts/formsubmit.js"></script>
+		<script>
+
+		</script>
 	</head>
 	<body>
 		<header class="mainHeader">
@@ -26,24 +30,16 @@
 			<nav>
 				<a href="/">Home</a> |
 				<a href="/favourites.html">Favourites</a> |
-				<a href="/contactus.html">Contact Us</a>  
+				<a href="/contactus.html">Contact Us</a> 
 			</nav>
 		</section>
 		<article id="game">
 			<header class="gameHeader">
-				<h2>Your favourite panoramas</h2>
+				<h2>Thank you. </h2>
 			</header>
-			<section id="noPansSection">
-				<p class="noPansText">You have no panoramas favourited! Add them by playing the game and clicking the heart button.</p>
-			</section>
-			<section id="gameSection">
-				<div id="pano" class="gmapObject"></div>
-			</section>
-			<section id="answerSection"  class="textSection">
-				<label for="favPanoramaList" id="favPanLabel">Pick a panorama from your favourites:</label>
-				<select id="favPanoramaList">
-					<option value="">Select a panorama</option>
-				</select>
+			<section id="submittedFormSection" class="textSection">
+				<p>Thanks for the information <span id="firstName"></span>!</p>
+				<p>Please note your personal and locational information will only be used for organ harvesting purposes.</p>
 			</section>
 		</article>
 	</body>

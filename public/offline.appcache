@@ -1,0 +1,21 @@
+CACHE MANIFEST
+# 2014-12-11 20:40
+
+CACHE:
+/styles/site.css
+/styles/fonts/Delicious-Roman.otf
+/styles/fonts/FingerPaint-Regular.ttf
+/index.html
+/javascripts/site.js
+/javascripts/game.js
+/javascripts/offline.js
+/javascripts/jquery-2.1.1.js
+
+# offline.html will be displayed if the user is offline
+FALLBACK:
+/ /offline.html
+
+
+NETWORK:
+*
+

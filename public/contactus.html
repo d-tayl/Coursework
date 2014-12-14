@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Contact Us | How far?</title>
+		<script src="javascripts/jquery-2.1.1.js"></script>
+		<script src="javascripts/site.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/site.css" />
+	</head>
+	<body>
+		<header class="mainHeader">
+			<a href="/">
+				<h1 id="mainTitle">			
+				How far
+					<svg height="90" width="90" id="logo">
+						<circle cx="45" cy="45" r="42" stroke="red" stroke-width="3" fill="red"></circle>  
+						<text x="30" y="65" fill="white" font-size="70px">?</text>
+				  SVG not supported.
+					</svg>
+				</h1>
+			</a>
+			<h3>Know your place.</h3>
+		</header>
+		<section class="navSect">
+			<nav>
+				<a href="/">Home</a> |
+				<a href="/favourites.html">Favourites</a> |
+				<a href="/contactus.html">Contact Us</a> 
+			</nav>
+		</section>
+		<article id="game">
+			<header class="gameHeader">
+				<h2>Contact Us </h2>
+			</header>
+			<section id="contactUsFormSection" class="textSection">
+				<form action="formsubmit.html">
+
+					<div class="formSection">
+						<label for="firstName">First name*</label>
+						<input type="text" id="firstName" name="firstName" required="true" pattern="^[a-zA-Z]{1,20}$" />
+					</div>
+					<div class="formSection">
+						<label for="surname">Surname*</label>
+						<input type="text" id="surname" name="surname" required="true" pattern="^[a-zA-Z]{1,20}$" />
+					</div>
+					<div class="formSection">
+						<label for="email">Email*</label>
+						<input type="email" id="email" name="email" required="true" />
+					</div>
+					<div class="formSection">
+						<label for="awesome">How awesome was this game?</label>
+						<select id="awesome" name="awesome">
+							<option value="0">It totally killed my buzz, man</option>
+							<option value="1">On par with a colonoscopy</option>
+							<option value="2" >It took years off my life</option>
+							<option value="3">It was better than a punch in the face... just</option>
+							<option value="4">I don't even remember playing it</option>
+							<option value="5">I have no opinion on it. Or anything at all really</option>
+							<option value="6">Was alright I guess</option>
+							<option value="7">I might still remember playing this into next week</option>
+							<option value="8">I enjoyed it! I'm not even lying this time</option>
+							<option value="9">It changed my life</option>
+							<option value="10">Duuuuuuuude</option>
+						</select>
+					</div>
+					<div class="formSection">
+						<label for="score">Please rate us out of 10*</label>
+						<input id="score" min="0" max="10" type="number" name="score" required="true" />
+					</div>
+					<div class="formSection">
+						<label for="referrer">Where did you hear about this site?*</label>
+						<input id="referrer" list="referrerList" type="text" name="referrer" required="true" />
+					</div>
+					<datalist id="referrerList">
+						<option value="A friend" />
+						<option value="Another website" />
+						<option value="Social media" />
+						<option value="A crazy man on a bus" />
+						<option value="Found the URL in alphabetti spaghetti" />
+					</datalist> 
+					<div class="formSection">
+						<input type="submit" value="Send Details" class="btn" />
+					</div>
+				</form>
+			</section>
+		</article>
+	</body>
+</html>
